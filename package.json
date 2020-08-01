@@ -1,0 +1,91 @@
+{
+  "name": "electron-cra-example",
+  "productName": "Electron-React-App",
+  "main": "public/electron.js",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "electron-is-dev": "^1.2.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.1"
+  },
+  "homepage": "./",
+  "description": "Electron App with React",
+  "scripts": {
+    "start": "export BROWSER=none && react-scripts start",
+    "start-electron": "export ELECTRON_START_URL=http://localhost:3000 && electron .",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "build-electron": "mkdir build/src && cp -r electron/. build/electron && cp assets/app-icon/win/icon.ico build/icon.ico && cp assets/app-icon/mac/icon.icns build/icon.icns && cp -r src/shared/. build/src/shared",
+    "package:mac": "electron-builder build --mac -c.extraMetadata.main=build/electron/main.js --publish never",
+    "package:win": "electron-builder build --win --x64 -c.extraMetadata.main=build/electron/main.js --publish never",
+    "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+    "clean": "rm -rf build dist"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "build": {
+    "appId": "website.caffellatte.flexim",
+    "mac": {
+      "category": "public.app-category.socialnetworks"
+    },
+    "files": [
+      "build/**/*",
+      "build/icon.*",
+      "node_modules/**/*"
+    ],
+    "dmg": {
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "msi"
+      ]
+    },
+    "directories":{
+       "buildResources": "build"
+     },
+    "publish": {
+      "provider": "github",
+      "repo": "flexim",
+      "owner": "caffellatte"
+    }
+  },
+  "devDependencies": {
+    "concurrently": "^5.2.0",
+    "electron": "^9.1.2",
+    "electron-builder": "^22.8.0",
+    "wait-on": "^5.1.0"
+  },
+  "author": "Mikhail Lutsenko"
+}
